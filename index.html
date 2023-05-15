@@ -7,19 +7,16 @@
     body {
       background: linear-gradient(135deg, pink, aqua);
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       overflow: hidden;
     }
-    
-    .progress-bar {
+
+    .progress-bar-wrapper {
       position: relative;
       width: 200px;
       height: 200px;
-      border-radius: 50%;
-      background-color: white;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -28,42 +25,49 @@
       cursor: pointer;
       overflow: hidden;
     }
-    
-    .progress-bar:before {
-      content: "";
+
+    .progress-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .progress-bar-bg {
+      fill: none;
+      stroke: #ddd;
+      stroke-width: 10;
+    }
+
+    .progress-bar-circle {
+      fill: none;
+      stroke: #ff7f50;
+      stroke-width: 10;
+      stroke-dasharray: 0 440;
+      stroke-linecap: round;
+      animation: progressAnimation 10s linear forwards;
+    }
+
+    .countdown {
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: 50%;
-      background-color: rgba(0, 0, 0, 0.2);
-      z-index: 1;
-      animation: progressAnimation 10s linear forwards;
-    }
-    
-    .progress-bar:hover {
-      transform: scale(1.2);
-    }
-    
-    .progress-bar span {
-      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 48px;
+      font-weight: bold;
       z-index: 2;
     }
-    
+
     @keyframes progressAnimation {
       0% {
-        transform: rotate(0deg);
+        stroke-dasharray: 0 440;
       }
       100% {
-        transform: rotate(360deg);
-      }
-    }
-    
-    @media only screen and (max-width: 600px) {
-      /* 手机屏幕自适应样式 */
-      .progress-bar {
-        width: 150px;
-        height: 150px;
-        font-size: 18px;
+        stroke-dasharray: 440 0;
       }
     }
   </style>
@@ -80,11 +84,12 @@
   </script>
 </head>
 <body>
-  <div style="text-align: center; margin-top: 20px;">
-    <h1>最新地址发布页</h1>
-  </div>
-  <div class="progress-bar">
-    <span id="timer">10</span>
+  <div class="progress-bar-wrapper">
+    <svg class="progress-bar" viewBox="0 0 100 100">
+      <circle class="progress-bar-bg" cx="50" cy="50" r="45"/>
+      <circle class="progress-bar-circle" cx="50" cy="50" r="45"/>
+    </svg>
+    <div class="countdown" id="timer">10</div>
   </div>
 </body>
 </html>
